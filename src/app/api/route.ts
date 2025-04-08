@@ -4,6 +4,29 @@ import axios from 'axios';
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search';
 
+interface VideoData {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+}
+
+interface YoutubeApiItem {
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string;
+      };
+    };
+  };
+}
+
+
 export async function POST(req: Request) {
   try {
     const { q } = await req.json(); // Read JSON body of the request
@@ -21,12 +44,13 @@ export async function POST(req: Request) {
       },
     });
 
-    const videos = response.data.items.map((item: any) => ({
+    const videos: VideoData[] = response.data.items.map((item: YoutubeApiItem) => ({
       id: item.id.videoId,
       title: item.snippet.title,
       description: item.snippet.description,
       thumbnail: item.snippet.thumbnails.default.url,
     }));
+    
 
     return NextResponse.json(videos, { status: 200 });
   } catch (error) {

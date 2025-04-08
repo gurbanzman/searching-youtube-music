@@ -13,15 +13,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+type VideoData = {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+};
+
 type Props = {
-  func: (formData: FormData) => void;
+  func: (formData: VideoData[]) => void;
 };
 
 type FormData = {
   music: string;
 };
 
-export const ProfileForm: React.FC<Props> = ({ func }) =>{
+export const ProfileForm: React.FC<Props> = ({ func }) => {
   const form = useForm<FormData>({
     defaultValues: {
       music: "",
@@ -29,7 +36,7 @@ export const ProfileForm: React.FC<Props> = ({ func }) =>{
   });
 
   const onSubmit = async (data: FormData) => {
-    const music = data.music as string;
+    const music = data.music;
     const response = await fetch("/api", {
       method: "POST",
       headers: {
@@ -45,7 +52,7 @@ export const ProfileForm: React.FC<Props> = ({ func }) =>{
     }
 
     try {
-      const items = await response.json();
+      const items: VideoData[] = await response.json();
       func(items);
     } catch (e) {
       console.error("Error parsing JSON:", e);
@@ -75,4 +82,4 @@ export const ProfileForm: React.FC<Props> = ({ func }) =>{
       </form>
     </Form>
   );
-}
+};
