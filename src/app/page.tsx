@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ProfileForm } from "@/components/search-bar";
 
 export default function Home() {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<FormData[]>([]);
 
   return (
     <div>
