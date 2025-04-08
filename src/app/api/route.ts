@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         part: 'snippet',
         q: q,
         type: 'video',
-        maxResults: 1,
+        maxResults: 4,
         key: YOUTUBE_API_KEY,
       },
     });

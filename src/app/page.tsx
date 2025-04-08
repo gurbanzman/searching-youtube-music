@@ -2,6 +2,12 @@
 import { useState } from "react";
 import { ProfileForm } from "@/components/search-bar";
 
+interface FormData {
+  id: string;
+  title: string;
+  description: string;
+}
+
 export default function Home() {
   const [videos, setVideos] = useState<FormData[]>([]);
 
